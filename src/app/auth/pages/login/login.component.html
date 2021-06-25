@@ -1,0 +1,52 @@
+
+
+<div class="col container-login100 " >
+
+    <form [formGroup]="miFormularioLogin" 
+          >
+      
+      
+      <h4 class="text-center mt-4">Iniciar sesión</h4>
+      <hr>
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Email:</label>
+        <div class="col">
+    
+          <input class="form-control"
+                 type="email"
+                 placeholder="E-mail"
+                 formControlName="email">
+                 <small class="text-danger" *ngIf="elCampoNoEsValido('email')">
+                   Email no admitido
+                 </small>
+        </div>
+      </div>
+      
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Contraseña:</label>
+        <div class="col">
+    
+          <input class="form-control"
+                 [type]="hide ? 'password' : 'text'"
+                 formControlName="password"
+                 placeholder="Contraseña"
+                 >
+                 <button (click)="hide = !hide">{{ hide ? 'Mostrar' : 'Ocualtar'}}</button>
+                 <!-- [class.is-invalid]="pass1NoValido" -->
+                 <small class="text-danger" *ngIf="elCampoNoEsValido('pass')">
+                    Email no admitido
+                  </small>
+        </div>
+      </div>
+       
+      <div class="form-group row">
+        <label class="col-2 col-form-label">&nbsp;</label>
+        <div class="input-group col">
+          <button type="submit" (click)="guardar()" class="btn btn-outline-info btn-block">
+         <i class="fa fa-sign-in"></i>   Iniciar sesión
+          </button>
+        </div>
+      </div>
+    
+    </form>
+</div>
