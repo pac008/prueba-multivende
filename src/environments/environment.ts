@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  base_url: 'https://app.multivende.com'
+  baseUrl: 'https://app.multivende.com'
 };
 
 /*
