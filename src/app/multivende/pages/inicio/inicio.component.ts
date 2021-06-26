@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Entry } from '../../interfaces/bodega.interface';
 import { Productos } from '../../interfaces/stocks-bodega.interface';
 import { ActualizacionMasivaService } from '../../services/actualizacion-masiva.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-inicio',
@@ -38,21 +39,30 @@ export class InicioComponent implements OnInit {
                                                       },err => console.log( err ) );
   }
   
-  globalUpdated(){
+  globalUpdate(){
   
     const productos = this.stocks.map( elem => { 
                       return { code: elem.code, amount: elem.amount };
                     });
-
-                    console.log( productos );
                     
     this.actualizacionMasivaService.actualizacionMasiva( this.bodega, productos )
                     .subscribe( resp => {
                       console.log( resp );
-                      
-                    }, err => console.log( err ))
+                      Swal.fire({
+                        icon:'success',
+                        text:'se ha actualizado correctamente',
+                        confirmButtonText: 'Cool'
+                      })                     
+                    }, err => {
+                      console.log( err )
+                      Swal.fire({ 
+                        title: 'Error!',
+                        text: 'Ha pasado algo inesperado, inténtalo más tarde',
+                        icon: 'error',
+                        
+                      })
 
-                  
+                    })
 
   }
 }
