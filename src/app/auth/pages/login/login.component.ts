@@ -21,13 +21,12 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async guardar(){
+  login(){
     if ( this.miFormularioLogin.invalid) {
       this.miFormularioLogin.markAllAsTouched();
       return;
     }
 
-    console.log( this.miFormularioLogin.value );
     this.authService.login( this.miFormularioLogin.value ).subscribe( token => { 
       
       localStorage.setItem('token', token['token'] );

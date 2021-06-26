@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MultivendeService } from '../../services/multivende.service';
+import { Entry } from '../../interfaces/bodega.interface';
+import { Productos } from '../../interfaces/stocks-bodega.interface';
+import { ActualizacionMasivaService } from '../../services/actualizacion-masiva.service';
 
 @Component({
   selector: 'app-inicio',
@@ -8,41 +10,49 @@ import { MultivendeService } from '../../services/multivende.service';
   ]
 })
 export class InicioComponent implements OnInit {
-  private providerId: string = '0762d118-259b-4e55-8040-c2ea86b2e93a';
-  constructor(private multivendeService: MultivendeService ) { }
+  public disabled: boolean = true;
+  public bodegas : Entry[];
+  public bodega  : string = '';
+  public stocks  : Productos[];
 
-  ngOnInit(): void {
-    this.multivendeService.getProviders().subscribe( providers => {
-      console.log( providers );
-    }, err => console.log( err ) );
+  constructor(private actualizacionMasivaService: ActualizacionMasivaService) {}
 
+  ngOnInit():void {
+      this.actualizacionMasivaService.getBodegasIds().subscribe( ({ entries }) => {
+        console.log( entries );
+        this.bodegas = entries;
+      })
   }
 
-  createProvider(){
-    this.multivendeService.createProvider('test1').subscribe( resp => {
-      console.log( resp );
-    }, err => console.log( err ))
+  getStocksPorBodega( idBodega:string ) {
+    if( idBodega.trim().length === 0) return;
+    
+    this.actualizacionMasivaService.getStocksPorBodega( idBodega )
+
+    
+                                                      .subscribe( resp => {
+                                                        console.log( resp );
+                                                        this.stocks = resp;
+                                                        
+                                                        // console.log( this.stocks );
+                                                      },err => console.log( err ) );
   }
+  
+  globalUpdated(){
+  
+    const productos = this.stocks.map( elem => { 
+                      return { code: elem.code, amount: elem.amount };
+                    });
 
-  getProviderById(){
+                    console.log( productos );
+                    
+    this.actualizacionMasivaService.actualizacionMasiva( this.bodega, productos )
+                    .subscribe( resp => {
+                      console.log( resp );
+                      
+                    }, err => console.log( err ))
 
+                  
 
-    this.multivendeService.getProviderById( this.providerId ).subscribe( provider => {
-      console.log( provider );
-    }, err => console.log( err ))
-  }
-
-  updateProvider(){
-    this.multivendeService.updateProvider( this.providerId, 'testUpdate' )
-                                            .subscribe( providerUpdated => {
-                                              console.log( providerUpdated );
-                                            }, err => console.log( err ) );
-  }
-
-  deleteProvider(){
-    this.multivendeService.deleteProvider( this.providerId )
-                                            .subscribe( providerDeleted => {
-                                              console.log( providerDeleted );
-                                            }, err => console.log( err ) );
   }
 }

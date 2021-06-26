@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
-import { MultivendeService } from './multivende/services/multivende.service';
 
 
 @NgModule({

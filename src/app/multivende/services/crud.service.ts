@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class MultivendeService {
+export class CRUDService {
 
   private baseUrl: string= environment.baseUrl;
   private merchantId: string = '302ac9ad-f0dc-406e-9bfe-a61f2ea16f3b';

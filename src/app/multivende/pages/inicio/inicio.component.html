@@ -1,5 +1,36 @@
 <app-nabvar></app-nabvar>
 
 <div class="container">
-    
+    <div class="col mt-5 text-center">
+        <h2>Bienvenido, Seleccione bodega</h2>
+        <select class="form-control"
+                [(ngModel)]="bodega"
+                (ngModelChange)="getStocksPorBodega($event)">
+            <option value="">Seleccione Bodega</option>
+            <option *ngFor="let bodega of bodegas" [value]="bodega._id">{{ bodega.name }}</option>
+        </select>
+    </div>
+    <div class="col mt-4 text-center" *ngIf="bodega.length > 0">
+        <h4>Modifique Stock de los productos</h4>
+        <div class="row">
+            <div class="col-md-3" *ngFor="let producto of stocks">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Producto</label>
+                    <input class="form-control" disabled [value]="producto.name">
+                    
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Stock</label>
+                    <input type="number" 
+                           class="form-control"  
+                           (change)="disabled = false"  
+                           [(ngModel)]="producto.amount"
+                           >
+                </div>
+
+            </div>
+            <button class="btn btn-outline-primary" [disabled]="disabled" (click)="globalUpdated()" >Actualizar Stocks</button>
+        </div>
+    </div>
+
 </div>
