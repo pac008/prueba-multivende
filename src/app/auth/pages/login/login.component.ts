@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit {
     }
 
     this.authService.login( this.miFormularioLogin.value ).subscribe( token => { 
-      
       localStorage.setItem('token', token['token'] );
       this.router.navigate(['/multivende/inicio']);
       

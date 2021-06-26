@@ -1,5 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { AuthGuard } from './auth/guards/auth.guard';
 
 
 const routes: Routes = [
@@ -10,7 +11,9 @@ const routes: Routes = [
     },
     {
         path: 'multivende',
-        loadChildren: () => import('./multivende/multivende.module').then( m => m.MultivendeModule )
+        loadChildren: () => import('./multivende/multivende.module').then( m => m.MultivendeModule ),
+        canLoad: [ AuthGuard ], 
+        canActivate: [ AuthGuard ]
     },
     {
         path: '**',
