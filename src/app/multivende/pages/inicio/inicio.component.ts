@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Entry } from '../../interfaces/bodega.interface';
+import { Bodega } from '../../interfaces/bodega.interface';
 import { Productos } from '../../interfaces/stocks-bodega.interface';
 import { ActualizacionMasivaService } from '../../services/actualizacion-masiva.service';
 import Swal from 'sweetalert2';
@@ -12,16 +12,16 @@ import Swal from 'sweetalert2';
 })
 export class InicioComponent implements OnInit {
   public disabled: boolean = true;
-  public bodegas : Entry[];
+  public bodegas : Bodega[];
   public bodega  : string = '';
   public stocks  : Productos[];
 
   constructor(private actualizacionMasivaService: ActualizacionMasivaService) {}
 
   ngOnInit():void {
-      this.actualizacionMasivaService.getBodegasIds().subscribe( ({ entries }) => {
-        console.log( entries );
-        this.bodegas = entries;
+      this.actualizacionMasivaService.getBodegasIds().subscribe( bodegas => {
+        console.log( bodegas );
+        this.bodegas = bodegas;
       })
   }
 

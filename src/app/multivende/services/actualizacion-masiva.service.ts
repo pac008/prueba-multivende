@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Bodegas } from '../interfaces/bodega.interface';
 import { map } from 'rxjs/operators';
 
 
@@ -21,13 +20,21 @@ export class ActualizacionMasivaService {
 
 
   getBodegasIds(){
-    return this.http.get<Bodegas>(`${ this.baseUrl }/api/m/${ this.merchantId }/stores-and-warehouses/p/${ this.page }`,
+    return this.http.get<any>(`${ this.baseUrl }/api/m/${ this.merchantId }/stores-and-warehouses/p/${ this.page }`,
                           { headers: this.headers })
+                          .pipe(
+                            map( ({ entries }) => {
+                                return entries.map( elem => {
+                                  return { _id: elem._id, name: elem.name }
+                                })
+                            })
+                          )
   }
 
   getStocksPorBodega( idBodega: string ){
     return this.http.get<any>(`${ this.baseUrl }/api/m/${ this.merchantId }/product-versions/p/1?_include_stock=true&_warehouse_id=${ idBodega }`,
-                          { headers: this.headers }).pipe( map ( ({ entries }) =>{
+                          { headers: this.headers }).pipe( 
+                                                      map ( ({ entries }) =>{
                                                           return entries.map(elem => {
                                                                 let nuevo = {
                                                                      code: elem.code,

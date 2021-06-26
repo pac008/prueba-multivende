@@ -2,12 +2,23 @@
 
 ### Realizada con Angular
 
-Ejecutar 
+#### Ejecutar 
 
 ````````
 npm i
 
 ````````
 
+####  Ejecutar los test con 
+
+````````
+ng test
+````````
+
+#### levantar el programa con
+
+````````
+ng serve -o
+````````
 
 

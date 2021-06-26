@@ -9,7 +9,7 @@ import { CRUDService } from '../../services/crud.service';
 })
 export class LlamarCRUDComponent implements OnInit {
 
-  private providerId: string = '0762d118-259b-4e55-8040-c2ea86b2e93a';
+  public providerId: string = '0762d118-259b-4e55-8040-c2ea86b2e93a';
   constructor(private crudService: CRUDService ) { }
 
   ngOnInit(): void {
